@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>仓储管理系统</title>
+    <link rel="stylesheet" type="text/css" href="static/js/r/login/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="static/js/r/login/css/body.css"/>
+
+</head>
+<body>
+<div class="container">
+<section id="content">
+    <form target="_blank">
+        <h1 th:text="#{login.tip}">用户登录</h1>
+        <div>
+            <input type="text" th:placeholder="#{login.username}" required="" id="username" value="root"/>
+        </div>
+        <div>
+            <input type="password" th:placeholder="#{login.pwd}" required="" id="password" value="123"/>
+        </div>
+        <div class="">
+            <span class="help-block u-errormessage" style="color: red" id="errormessage">&nbsp;</span>
+        </div>
+        <div>
+            <!-- <input type="submit" value="Log in" /> -->
+            <input type="button" th:value="#{login.btn}" class="btn btn-primary" onclick="login()" />
+            <a href="#">[[#{login.forget}]]</a>
+            <!-- <a href="#">Register</a> -->
+        </div>
+    </form><!-- form -->
+    <div class="button">
+        <span class="help-block u-errormessage"  id="js-server-helpinfo">&nbsp;</span>
+
+    </div> <!-- button -->
+    </section><!-- content -->
+    </div>
+
+    <div align="center">
+
+        <br><br>
+
+        <a th:href="@{/(l='zh_CN')}"><u>中文</u></a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a th:href="@{/(l='en_US')}"><u>English</u></a>
+    </div>
+
+</div>
+    <br><br><br><br>
+    <div style="text-align:center;">
+        <p></p>
+    </div>
+    <script type="text/javascript" src="static/js/jquery-3.5.0.js"></script>
+    <script type="text/javascript">
+        function login() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var error =$("#errormessage");
+            $.ajax({
+                url: "login",
+                type: "POST",
+                dataType:'json',
+                data: {
+                    'user_name' : username,
+                    'user_password' : password
+                },
+                error:function (data) {
+                    error.empty();
+                    error.text("请求失败");
+                    //alert(data.state);
+                },
+                success:function (data) {
+                    //alert(data.state.toString());
+                    if(data.state==1)
+                        location.assign("index");
+                    else {
+                        error.empty();
+                        error.text("用户名或密码错误");
+                        return false;
+                    }
+
+                }
+            })
+        }
+    </script>
+</body>
+</html>

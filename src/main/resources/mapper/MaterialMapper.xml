@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhu.hualihushao.dao.MaterialDao">
+    <resultMap id="BaseMap" type="com.dhu.hualihushao.entity.Material">
+        <id column="material_id" property="material_id"></id>
+        <result column="material_name" property="material_name"></result>
+        <result column="material_price" property="material_price"></result>
+        <result column="material_supplier" property="material_supplier"></result>
+    </resultMap>
+
+    <select id="getAll" resultMap="BaseMap">
+        select
+            material.*
+        from
+            material
+    </select>
+
+    <select id="getOne" parameterType="com.dhu.hualihushao.entity.Material" resultMap="BaseMap">
+        select
+            material.*
+        from
+            material
+        <where>
+            material_id = #{material_id}
+        </where>
+    </select>
+
+    <insert id="add" parameterType="com.dhu.hualihushao.entity.Material">
+        insert
+            material
+        value(
+            #{material_id},
+            #{material_name},
+            #{material_price},
+            #{material_supplier}
+        )
+    </insert>
+</mapper>

@@ -1,0 +1,44 @@
+## 样例 https://www.cnblogs.com/peterxiao/p/7779188.html
+#公共配置与profiles选择无关
+mybatis:
+  typeAliasesPackage: com.dhu.hualihushao.entity
+  mapperLocations: classpath:mapper/*.xml
+  configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 8081
+
+#开发配置
+spring:
+  profiles:
+    active: dev
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: false
+  messages:
+    basename: i18n.login
+
+  datasource:
+    url: jdbc:mysql://rm-uf67zc8e57kq2dqkfeo.mysql.rds.aliyuncs.com:3306/wms_2020_dev
+    username: icourse
+    password: icourse_PASSWORD
+    driver-class-name: com.mysql.jdbc.Driver
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+

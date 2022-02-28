@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhu.hualihushao.dao.ReturnDao">
+    <resultMap id="BaseMap" type="com.dhu.hualihushao.entity.Return">
+        <id column="return_id" property="return_id"/>
+        <result column="cache_id" property="cache_id"/>
+        <result column="return_numbers" property="return_numbers"/>
+        <result column="return_time" jdbcType="TIMESTAMP" property="return_time" javaType="java.util.Date"/>
+        <!--        前面是数据库，后面是java-->
+        <association property="cache" javaType="com.dhu.hualihushao.entity.Cache">
+            <id column="cache_id" property="cache_id"/>
+            <result column="repository_id" property="repository_id"/>
+            <result column="material_id" property="material_id"/>
+            <result column="cache_time" jdbcType="TIMESTAMP" property="cache_time" javaType="java.util.Date"/>
+            <result column="cache_numbers" property="cache_numbers"/>
+            <association property="material" javaType="com.dhu.hualihushao.entity.Material">
+                <id column="material_id" property="material_id"></id>
+                <result column="material_name" property="material_name"></result>
+                <result column="material_price" property="material_price"></result>
+                <result column="material_supplier" property="material_supplier"></result>
+            </association>
+        </association>
+
+    </resultMap>
+
+    <select id="getAll" parameterType="com.dhu.hualihushao.entity.Return" resultMap="BaseMap">
+        select
+        wms_return.*,
+        cache.*,
+        material.*
+        from
+        wms_return,
+        cache,
+        material
+        <where>
+            <if test="start != '' and start !=null">
+                return_time > #{start}
+            </if>
+            <if test="end != '' and end != null">
+                return_time &lt; #{end}
+            </if>
+            and return_numbers > 0
+            and wms_return.cache_id = cache.cache_id
+            and cache.repository_id = #{repository_id}
+            and cache.material_id = material.material_id
+        </where>
+    </select>
+
+    <select id="getOne" parameterType="com.dhu.hualihushao.entity.Return" resultMap="BaseMap">
+        select
+        wms_return.*,
+        cache.*,
+        material.*
+        from
+        wms_return,
+        cache,
+        material
+        <where>
+            return_id = #{return_id}
+            and return_numbers > 0
+            and wms_return.cache_id = cache.cache_id
+            and cache.material_id = material.material_id
+        </where>
+    </select>
+
+    <insert id="add" parameterType="com.dhu.hualihushao.entity.Return">
+        insert into
+            wms_return(cache_id,return_numbers,return_time)
+        value(
+            #{cache_id},
+            #{return_numbers},
+            #{return_time}
+            )
+    </insert>
+
+    <!--    <update id="updateNumbers" parameterType="com.dhu.hualihushao.entity.Cache">-->
+    <!--        update  cache-->
+    <!--        set cache_numbers = #{cache_numbers}-->
+    <!--        where cache_id = #{cache_id}-->
+    <!--    </update>-->
+
+
+</mapper>

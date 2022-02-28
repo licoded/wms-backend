@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>Ajax</title>
+
+</head>
+
+<body>
+
+    username:<input type="text" id="txtname" onblur="al()"/>
+</body>
+<script  type="text/javascript" src="static/js/jquery-3.5.0.js"></script>
+<script type="text/javascript">
+    function al() {
+        //请求将文本框的值发送给服务器，接受服务器返回的值
+        //url:待载入的url地址
+        //data:待发送的key/value参数
+        //success:载入成功时返回的数据
+        //data:封装了服务器返回的数据
+        //status:状态
+        $.ajax({
+            url: "ajax",
+            type:"get",
+            datatype: 'json',
+            data: {
+                'name': $("#txtname").val()
+            },
+            success:function (data,status) {
+                alert(data);
+            }
+        });
+
+    }
+</script>
+</html>

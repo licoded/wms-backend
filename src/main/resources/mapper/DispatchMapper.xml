@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhu.hualihushao.dao.DispatchDao">
+    <resultMap id="BaseMap" type="com.dhu.hualihushao.entity.Dispatch">
+        <id column="dispatch_id" property="dispatch_id"/>
+        <result column="repository_id_0" property="repository_id_0"/>
+        <result column="repository_id_1" property="repository_id_1"/>
+        <result column="dispatch_num" property="dispatch_num"/>
+        <result column="dispatch_time" jdbcType="TIMESTAMP" property="dispatch_time" javaType="java.util.Date"/>
+        <result column="cache_id" property="cache_id"/>
+        <association property="cache" javaType="com.dhu.hualihushao.entity.Cache">
+            <id column="cache_id" property="cache_id"/>
+            <result column="repository_id" property="repository_id"/>
+            <result column="material_id" property="material_id"/>
+            <result column="cache_time" jdbcType="TIMESTAMP" property="cache_time" javaType="java.util.Date"/>
+            <result column="cache_numbers" property="cache_numbers"/>
+            <association property="material" javaType="com.dhu.hualihushao.entity.Material">
+                <id column="material_id" property="material_id"></id>
+                <result column="material_name" property="material_name"></result>
+                <result column="material_price" property="material_price"></result>
+                <result column="material_supplier" property="material_supplier"></result>
+            </association>
+        </association>
+    </resultMap>
+    <sql id="sql1">
+        dispatch_id,
+        repository_id_0,
+        repository_id_1,
+        dispatch_num,
+        dispatch_time,
+        cache_id
+    </sql>
+    <insert id="add" parameterType="com.dhu.hualihushao.entity.Dispatch">
+        insert into
+        dispatch(repository_id_0,repository_id_1,cache_id,dispatch_num,dispatch_time)
+        value(
+        #{repository_id_0},
+        #{repository_id_1},
+        #{cache_id},
+        #{dispatch_num},
+        #{dispatch_time}
+        )
+    </insert>
+
+    <select id="getAll" parameterType="com.dhu.hualihushao.entity.Dispatch" resultMap="BaseMap">
+        select
+--         distinct
+            dispatch.*,
+            cache.*,
+            material.*
+        from
+            dispatch,
+            cache,
+            material
+        <where>
+            <if test="start != '' and start !=null">
+               and dispatch_time > #{start}
+            </if>
+            <if test="end != '' and end != null">
+              and dispatch_time &lt; #{end}
+            </if>
+
+
+            and dispatch.cache_id = cache.cache_id
+            and cache.material_id = material.material_id
+
+            <if test="repository_id_0 != '' and repository_id_0 != null and repository_id_0 != 0">
+                repository_id_0 = #{repository_id_0}
+                or
+                repository_id_1 = #{repository_id_1}
+            </if>
+        </where>
+    </select>
+
+    <select id="getIn" parameterType="com.dhu.hualihushao.entity.Search" resultMap="BaseMap">
+        select
+        distinct  dispatch.*,
+        cache.*,
+        material.*
+        from
+        dispatch,
+        cache,
+        material
+        <where>
+            <if test="start != '' and start !=null">
+                and dispatch_time > #{start}
+            </if>
+            <if test="end != '' and end != null">
+                and dispatch_time &lt; #{end}
+            </if>
+            and repository_id_1 = #{repository_id}
+            and dispatch.cache_id = cache.cache_id
+            and cache.material_id = material.material_id
+        </where>
+    </select>
+
+    <select id="getOut" parameterType="com.dhu.hualihushao.entity.Search" resultMap="BaseMap">
+        select
+        distinct  dispatch.*,
+        cache.*,
+        material.*
+        from
+        dispatch,
+        cache,
+        material
+        <where>
+            <if test="start != '' and start !=null">
+                and dispatch_time > #{start}
+            </if>
+            <if test="end != '' and end != null">
+                and dispatch_time &lt; #{end}
+            </if>
+            and repository_id_0 = #{repository_id}
+            and dispatch.cache_id = cache.cache_id
+            and cache.material_id = material.material_id
+        </where>
+    </select>
+
+</mapper>

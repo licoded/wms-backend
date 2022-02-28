@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhu.hualihushao.dao.BuyDao">
+    <resultMap id="BaseMap" type="com.dhu.hualihushao.entity.Buy">
+        <id column="buy_id" property="buy_id"/>
+        <result column="repository_id" property="repository_id"/>
+        <result column="material_id" property="material_id"/>
+        <result column="buy_time" jdbcType="TIMESTAMP" property="buy_time" javaType="java.util.Date"/>
+        <result column="buy_numbers" property="buy_numbers"/>
+<!--        <result column="sum(buy_numbers*material_price)" property="buy_numbers"/>-->
+        <!--        前面是数据库，后面是java-->
+        <association property="material" javaType="com.dhu.hualihushao.entity.Material">
+            <id column="material_id" property="material_id"></id>
+            <result column="material_name" property="material_name"></result>
+            <result column="material_price" property="material_price"></result>
+            <result column="material_supplier" property="material_supplier"></result>
+        </association>
+
+        <association property="repository" javaType="com.dhu.hualihushao.entity.Repository">
+            <id column="repository_id" property="repository_id"></id>
+            <result column="repository_name" property="repository_name"></result>
+            <result column="repository_capacity" property="repository_capacity"></result>
+        </association>
+    </resultMap>
+
+    <select id="getAll" parameterType="com.dhu.hualihushao.entity.Buy" resultMap="BaseMap">
+        select
+        buy.*,
+        material.*,
+        repository.*
+        from
+        buy,
+        material,
+        repository
+        <where>
+            <if test="start != '' and start !=null">
+                buy_time > #{start}
+            </if>
+            <if test="end != '' and end != null">
+                buy_time &lt; #{end}
+            </if>
+            and buy.repository_id = #{repository_id}
+            and buy_numbers > 0
+            and buy.repository_id = repository.repository_id
+            and buy.material_id = material.material_id
+
+        </where>
+    </select>
+
+    <select id="getOne" parameterType="com.dhu.hualihushao.entity.Buy" resultMap="BaseMap">
+        select
+        buy.*,
+        material.*,
+        repository.*
+        from
+        buy,
+        material,
+        repository
+        <where>
+            buy_id = #{buy_id}
+            and buy_numbers > 0
+            and buy.repository_id = repository.repository_id
+            and buy.material_id = material.material_id
+        </where>
+    </select>
+
+    <insert id="add" parameterType="com.dhu.hualihushao.entity.Buy">
+        insert into
+            buy(repository_id,material_id,buy_time,buy_numbers)
+        value(
+            #{repository_id},
+            #{material_id},
+            #{buy_time},
+            #{buy_numbers}
+            )
+    </insert>
+
+<!--    <update id="updateNumbers" parameterType="com.dhu.hualihushao.entity.Cache">-->
+<!--        update  cache-->
+<!--        set cache_numbers = #{cache_numbers}-->
+<!--        where cache_id = #{cache_id}-->
+<!--    </update>-->
+
+
+</mapper>

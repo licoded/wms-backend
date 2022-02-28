@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhu.hualihushao.dao.RepositoryDao">
+    <resultMap id="BaseMap" type="com.dhu.hualihushao.entity.Repository">
+        <id column="repository_id" property="repository_id"/>
+        <result column="repository_name" property="repository_name"/>
+        <result column="repository_capacity" property="repository_capacity"/>
+    </resultMap>
+    <select id="getOneById" parameterType="java.lang.Integer" resultMap="BaseMap">
+        select
+            repository.*
+        from
+            repository
+        <where>
+            repository_id = #{repository_id}
+        </where>
+    </select>
+
+    <insert id="add" parameterType="com.dhu.hualihushao.entity.Repository">
+        insert into
+            repository(repository_id,repository_name,repository_capacity)
+        value(
+            #{repository_id},
+            #{repository_name},
+            #{repository_capacity}
+            )
+    </insert>
+
+    <select id="getAll" resultMap="BaseMap">
+        select
+            repository.*
+        from
+            repository
+    </select>
+
+    <delete id="deleteOneById" parameterType="java.lang.Integer">
+        delete from repository where repository_id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.dhu.hualihushao.entity.Repository">
+        update  repository
+        set
+        repository_name = #{repository_name},
+        repository_capacity = #{repository_capacity}
+        where repository_id = #{repository_id}
+    </update>
+</mapper>

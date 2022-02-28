@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhu.hualihushao.dao.ShopDao">
+    <resultMap id="BaseMap" type="com.dhu.hualihushao.entity.Shop">
+        <id column="shop_id" property="shop_id"/>
+        <result column="repository_id" property="repository_id"/>
+        <result column="material_id" property="material_id"/>
+        <result column="shop_time" jdbcType="TIMESTAMP" property="shop_time" javaType="java.util.Date"/>
+        <result column="shop_numbers" property="shop_numbers"/>
+        <result column="shop_price" property="shop_price"/>
+
+        <!--        前面是数据库，后面是java-->
+        <association property="material" javaType="com.dhu.hualihushao.entity.Material">
+            <id column="material_id" property="material_id"></id>
+            <result column="material_name" property="material_name"></result>
+            <result column="material_price" property="material_price"></result>
+            <result column="material_supplier" property="material_supplier"></result>
+        </association>
+
+
+    </resultMap>
+
+    <sql id="sql">
+        shop_id,
+        repository_id,
+        material_id,
+        shop_time,
+        shop_numbers,
+        shop_price,
+    </sql>
+    <insert id="add" parameterType="com.dhu.hualihushao.entity.Shop">
+        insert into
+            shop(repository_id,material_id,shop_time,shop_numbers,shop_price)
+        values (
+            #{repository_id},
+            #{material_id},
+            #{shop_time},
+            #{shop_numbers},
+            #{shop_price}
+        )
+    </insert>
+
+    <select id="getAll" parameterType="com.dhu.hualihushao.entity.Search" resultMap="BaseMap">
+        select
+            shop.*,
+            repository.*,
+            material.*
+        from
+            shop,
+            repository,
+            material
+        <where>
+            <if test="start != '' and start !=null">
+                shop_time > #{start}
+            </if>
+            <if test="end != '' and end != null">
+                shop_time &lt; #{end}
+            </if>
+            and shop.repository_id = #{repository_id}
+            and shop_numbers > 0
+            and shop.repository_id = repository.repository_id
+            and shop.material_id = material.material_id
+        </where>
+
+    </select>
+
+</mapper>

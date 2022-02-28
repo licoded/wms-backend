@@ -1,0 +1,333 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="js/uiadmin/lib/html5shiv.js"></script>
+<script type="text/javascript" src="js/uiadmin/lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="js/uiadmin/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="js/uiadmin/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="js/uiadmin/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="js/uiadmin/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="js/uiadmin/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="js/uiadmin/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>时间线</title>
+	<style>
+		.timeline-small {
+			max-width: 900px;
+			max-height: 3000px;
+			overflow: hidden;
+			margin: 30px auto 0;
+			box-shadow: 0 0 40px #a0a0a0;
+			font-family: 'Open Sans', sans-serif;
+			/*background: url("/static/js/assets/css/images/timg.jpg");*/
+		}
+		.timeline-small-body ul {
+			padding: 1em 0 0 2em;
+			margin: 0;
+			list-style: none;
+			position: relative;
+		}
+		.timeline-small-body ul::before {
+			content: ' ';
+			height: 100%;
+			width: 5px;
+			background-color: #d9d9d9;
+			position: absolute;
+			top: 0;
+			left: 2.4em;
+			z-index: -1;
+		}
+		.timeline-small-body li div {
+			display: inline-block;
+			margin: 1em 0;
+			vertical-align: top;
+		}
+		.timeline-small-body .bullet {
+			width: 1rem;
+			height: 1rem;
+			box-sizing: border-box;
+			border-radius: 50%;
+			background: #fff;
+			z-index: 1;
+			margin-right: 1rem;
+			margin-top: 7%;
+		}
+		.timeline-small-body .bullet.pink {
+			background-color: hotpink;
+			border: 3px solid #F93B69;
+		}
+		.timeline-small-body .bullet.green {
+			background-color: lightseagreen;
+			border: 3px solid #B0E8E2;
+		}
+		.timeline-small-body .bullet.blue {
+			background-color: aquamarine;
+			border: 3px solid cadetblue;
+		}
+		.timeline-small-body .bullet.orange {
+			background-color: salmon;
+			border: 3px solid #EB8B6E;
+		}
+		.timeline-small-body .date {
+			width: 23%;
+			font-size: 0.75em;
+			padding-top: 0.40rem;
+			padding-right: 2rem;
+		}
+		.timeline-small-body .desc {
+			width: 50%;
+		}
+		.timeline-small-body h3 {
+			font-size: 0.9em;
+			font-weight: 400;
+			margin: 0;
+		}
+		.timeline-small-body h4 {
+			margin: 0;
+			font-size: 0.7em;
+			font-weight: 400;
+			color: #808080;
+		}
+	</style>
+<!--	<style type="text/css">-->
+<!--		.setbg{-->
+<!--			background: url("static/js/assets/css/images/timg.jpg");-->
+<!--		}-->
+<!--	</style>-->
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i>
+	首页 <span class="c-gray en">&gt;</span>
+	时间线
+	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+	   href="javascript:location.replace(location.href);"
+	   title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<!--<div class="setbg">-->
+<div class="timeline-small" background="">
+	<div class="timeline-small-body">
+		<ul>
+			<li>
+				<div class="bullet pink"></div>
+				<div class="date">2020年04月29日</div>
+				<div class="desc">
+					<h3>确定分组</h3>
+					<h4>
+						选题，初步数据库架构设计
+					</h4>
+				</div>
+			</li>
+			<li>
+				<div class="bullet orange"></div>
+				<div class="date">2020年05月01日</div>
+				<div class="desc">
+					<h3>数据库建立</h3>
+				</div>
+			</li>
+			<li>
+				<div class="bullet blue"></div>
+				<div class="date">2020年05月08日</div>
+				<div class="desc">
+					<h3>用户信息模块，调拨模块完成</h3>
+				</div>
+			</li>
+			<li>
+				<div class="bullet green"></div>
+				<div class="date">2020年05月18日</div>
+				<div class="desc">
+					<h3>调拨模块完成</h3>
+				</div>
+			</li>
+			<li>
+				<div class="bullet pink"></div>
+				<div class="date">2020年05月30日</div>
+				<div class="desc">
+					<h3>业务统计功能模块完成</h3>
+				</div>
+			</li>
+			<li>
+				<div class="bullet orange"></div>
+				<div class="date">2020年06月03日</div>
+				<div class="desc">
+					<h3>系统初步整体建立，后期测试测试功能开始</h3>
+				</div>
+			</li>
+			<li>
+				<div class="bullet blue"></div>
+				<div class="date">2020年06月08日</div>
+				<div class="desc">
+					<h3>材料整理，撰写报告</h3>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+<!--</div>-->
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="js/uiadmin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/uiadmin/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="js/uiadmin/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="js/uiadmin/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="js/uiadmin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="js/uiadmin/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/uiadmin/lib/laypage/1.2/laypage.js"></script>
+<!--
+<script type="text/javascript" src="js/uiadmin/js/collect-online.js"></script>
+-->
+<script type="text/javascript">
+	$(function () {
+        //searchOnlinePagingCollect();
+        //searchOninePagingCollect("all");//这里获取的不分订单过期和未过期
+    });
+
+
+</script>
+</body>
+</html>
+
+<!--<!DOCTYPE html >-->
+<!--<html>-->
+
+<!--<head>-->
+
+<!--	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">-->
+<!--	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
+<!--	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+<!--	<meta charset="UTF-8">-->
+<!--	<title>状态详情</title>-->
+<!--	<style>-->
+<!--		#timeleft div {-->
+<!--			height: 65px;-->
+<!--			color: #333333;-->
+<!--		}-->
+
+<!--		#timecenter div {-->
+<!--			height: 65px;-->
+<!--			color: #333333;-->
+<!--		}-->
+
+<!--		#timeright div {-->
+<!--			height: 65px;-->
+<!--			color: #333333;-->
+<!--		}-->
+
+<!--		#timeright div p {-->
+<!--			margin: 0 0 0px;-->
+<!--		}-->
+
+<!--		.cicle1 {-->
+<!--			position: absolute;-->
+<!--			top: 0px;-->
+<!--			left: -10px;-->
+<!--			border-radius: 10px;-->
+<!--			list-style: none;-->
+<!--			width: 20px;-->
+<!--			height: 20px;-->
+<!--			border: 1px solid #cccccc;-->
+<!--			background: #ffffff;-->
+<!--		}-->
+
+<!--		.cicle2 {-->
+<!--			position: absolute;-->
+<!--			top: 70px;-->
+<!--			left: -10px;-->
+<!--			border-radius: 10px;-->
+<!--			list-style: none;-->
+<!--			width: 20px;-->
+<!--			height: 20px;-->
+<!--			border: 1px solid #cccccc;-->
+<!--			background: #ffffff;-->
+<!--		}-->
+
+<!--		.cicle3 {-->
+<!--			position: absolute;-->
+<!--			top: 140px;-->
+<!--			left: -10px;-->
+<!--			border-radius: 10px;-->
+<!--			list-style: none;-->
+<!--			width: 20px;-->
+<!--			height: 20px;-->
+<!--			border: 1px solid #cccccc;-->
+<!--			background: #ffffff;-->
+<!--		}-->
+
+<!--		.cicle4 {-->
+<!--			position: absolute;-->
+<!--			top: 210px;-->
+<!--			left: -10px;-->
+<!--			border-radius: 10px;-->
+<!--			list-style: none;-->
+<!--			width: 20px;-->
+<!--			height: 20px;-->
+<!--			border: 1px solid #cccccc;-->
+<!--			background: #ffffff;-->
+<!--		}-->
+<!--	</style>-->
+<!--	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--&lt;!&ndash;右侧信息&ndash;&gt;-->
+<!--<div class="col-md-10 col-sm-10 col-xs-10" style="margin-top:30px;">-->
+<!--	<div class="col-md-4 col-sm-4 col-xs-4" id="timeleft">-->
+<!--		<div>2012-12-24 8:00</div>-->
+<!--		<div>2012-12-24 8:00</div>-->
+<!--		<div>2012-12-24 8:00</div>-->
+<!--		<div>2012-12-24 8:00</div>-->
+
+<!--	</div>-->
+
+<!--	<div class="col-md-4 col-sm-4 col-xs-4" id="timecenter">-->
+
+<!--		<div style="height:212px;  border-left:1px   solid  #366595; position:absolute;  left:65px;">-->
+<!--			<ul>-->
+<!--				<li class="cicle1"></li>-->
+<!--				<li class="cicle2"></li>-->
+<!--				<li class="cicle3"></li>-->
+<!--				<li class="cicle4"></li>-->
+<!--			</ul>-->
+
+<!--		</div>-->
+<!--	</div>-->
+
+<!--	<div class="col-md-4 col-sm-4 col-xs-4" id="timeright">-->
+<!--		<div>-->
+<!--			<p>完工交车</p>-->
+<!--			<p>1小时</p>-->
+<!--		</div>-->
+<!--		<div>-->
+<!--			<p>完工交车</p>-->
+<!--			<p>1小时</p>-->
+<!--		</div>-->
+
+<!--		<div>-->
+<!--			<p>完工交车</p>-->
+<!--			<p>1小时</p>-->
+<!--		</div>-->
+<!--		<div>-->
+<!--			<p>完工交车</p>-->
+<!--			<p>1小时</p>-->
+<!--		</div>-->
+
+<!--	</div>-->
+
+<!--</div>-->
+
+<!--</body>-->
+
+<!--</html>-->
+
+

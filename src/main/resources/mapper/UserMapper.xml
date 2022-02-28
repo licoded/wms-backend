@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhu.hualihushao.dao.UserDao">
+    <resultMap id="BaseMap" type="com.dhu.hualihushao.entity.User">
+        <id column="user_id" property="user_id"></id>
+        <result column="user_name" property="user_name"></result>
+        <result column="user_password" property="user_password"></result>
+        <result column="user_repository" property="user_repository"></result>
+        <result column="user_chmod" property="user_chmod"></result>
+        <result column="user_money" property="user_money"></result>
+    </resultMap>
+    <sql id="sql1">
+        user_id,
+        user_name,
+        user_password,
+        user_repository,
+        user_chmod,
+        user_money
+    </sql>
+    <sql id="sql2">
+        user_name,
+        user_password,
+        user_repository,
+        user_chmod,
+        user_money
+    </sql>
+    <select id="getOne" resultMap="BaseMap" parameterType="com.dhu.hualihushao.entity.User">
+        select
+            <include refid="sql1"></include>
+        from
+            user
+        <where>
+            <if test="user_id != null and user_id != ''">
+                    and user_id = #{user_id}
+            </if>
+            <if test="user_name != null and user_name != ''">
+                    and user_name = #{user_name}
+            </if>
+--                 user_name = #{user_name}
+        </where>
+    </select>
+    <update id="updatePwd" parameterType="com.dhu.hualihushao.entity.User">
+        update user
+        set user_password = #{user_password}
+        where user_name = #{user_name}
+    </update>
+    <update id="updateChmod" parameterType="com.dhu.hualihushao.entity.User">
+        update user
+        set user_chmod = #{user_chmod}
+        where user_name = #{user_name}
+    </update>
+    <update id="updateMoney" parameterType="com.dhu.hualihushao.entity.User">
+        update  user
+        set user_money = #{user_money}
+        where user_id = #{user_id}
+    </update>
+    <update id="update" parameterType="com.dhu.hualihushao.entity.User">
+        update user
+        set
+--         user_name = #{user_name},
+        user_password = #{user_password},
+        user_repository = #{user_repository},
+        user_chmod = #{user_chmod},
+        user_money = #{user_money}
+        where
+        user_name = #{user_name}
+    </update>
+    <insert id="add" parameterType="com.dhu.hualihushao.entity.User">
+        insert into
+            user(<include refid="sql2"/>)
+            value(
+            #{user_name},
+            #{user_password},
+            #{user_repository},
+            #{user_chmod},
+            #{user_money}
+        )
+    </insert>
+
+    <select id="getAll" resultMap="BaseMap" parameterType="com.dhu.hualihushao.entity.User">
+        select
+        <include refid="sql1"/>
+        from
+        user
+        where user_name like '%${user_name}%'
+    </select>
+    <delete id="delete" parameterType="com.dhu.hualihushao.entity.User">
+        delete from user
+        where user_id = #{user_id}
+    </delete>
+
+    <select id="getAllByRepositoryId" parameterType="java.lang.Integer" resultMap="BaseMap">
+        select
+        <include refid="sql1"/>
+        from
+        user
+        where user_repository = #{id}
+    </select>
+</mapper>
