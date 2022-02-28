@@ -1,0 +1,34 @@
+name: package-and-deploy
+on:
+  push: # 在代码提交时自动触发
+    branches:
+      - master
+jobs:
+  publish:
+    runs-on: ubuntu-latest 
+    permissions: 
+      contents: read
+      packages: write 
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java for package
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+      - name: package
+        run: |
+          mvn --batch-mode package
+      - name: Set env
+        run: |
+          echo "PACKAGE_JAR=$(ll target | grep '.jar$' | awk '{print $NF}')" >> $GITHUB_ENV
+          echo $PACKAGE_JAR
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          source: "target/$PACKAGE_JAR"
+          target: "home/lic/jar"
