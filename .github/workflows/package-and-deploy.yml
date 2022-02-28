@@ -21,7 +21,7 @@ jobs:
           mvn --batch-mode package
       - name: Set env
         run: |
-          echo "PACKAGE_JAR=$(ll target | grep '.jar$' | awk '{print $NF}')" >> $GITHUB_ENV
+          echo "PACKAGE_JAR=$(ls -l target | grep '.jar$' | awk '{print $NF}')" >> $GITHUB_ENV
           echo $PACKAGE_JAR
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
