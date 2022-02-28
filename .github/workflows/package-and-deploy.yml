@@ -31,4 +31,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 22
           source: "target/${{ env.PACKAGE_JAR }}"
-          target: "/home/lic/jar"
+          target: "/home/lic/jar/${{ env.PACKAGE_JAR }}"
