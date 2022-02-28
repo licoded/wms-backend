@@ -38,4 +38,16 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 22
           source: "target/${{ env.PACKAGE_JAR }}"
-          target: "/home/lic/jar/${{ env.PACKAGE_JAR }}"
+          target: "/home/${{ secrets.USERNAME }}/jar"
+      - name: executing remote ssh commands
+        # 使用appleboy/ssh-action@master来执行命令
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SECRET }}
+          script: |
+            cd /home/${{ secrets.USERNAME }}/jar
+            mv target/${{ env.PACKAGE_JAR }} ${{ env.PACKAGE_JAR }}
+            rm -rf target
+            sudo service my-java-hualihushao stop
