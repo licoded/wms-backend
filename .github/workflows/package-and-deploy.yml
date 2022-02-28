@@ -50,4 +50,6 @@ jobs:
             cd /home/${{ secrets.USERNAME }}/jar
             mv target/${{ env.PACKAGE_JAR }} ${{ env.PACKAGE_JAR }}
             rm -rf target
-            sudo service my-java-hualihushao stop
+            sudo service my-java-hualihushao restart<<EOF
+            ${{ secrets.PASSWORD }}
+            EOF
